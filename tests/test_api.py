@@ -46,3 +46,15 @@ def test_trend_and_methodology_are_inspectable():
     assert methods.status_code == 200
     assert len(trend.json()["series"]) == 24
     assert methods.json()["thresholds"]["processing_signal"]
+
+
+def test_root_demo_is_rendered_from_engine_not_stale_template():
+    response = client.get("/")
+    assert response.status_code == 200
+    html = response.text
+
+    assert "Bearbeitungszeit bei Kontenklärungen deutlich gestiegen." in html
+    assert "24,2 → 32,7 Tage" in html
+    assert "24-Monats-Verlauf · Signalvergleich: Dez. 2025 – Mai 2026 vs. Juni – Aug. 2026" in html
+    assert "33.0, 32.7, 32.2]" in html
+    assert "30.8,33.0,34.3" not in html.replace(" ", "")
