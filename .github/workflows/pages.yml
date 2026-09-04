@@ -30,10 +30,24 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Build demo
+        run: |
+          rm -rf _site
+          cp -R web _site
+          python - <<'PY'
+          from pathlib import Path
+          index = Path('_site/index.html')
+          faq = Path('web/faq-snippet.html').read_text(encoding='utf-8')
+          html = index.read_text(encoding='utf-8')
+          anchor = '    <section class="panel method">'
+          if anchor not in html:
+              raise SystemExit('FAQ injection anchor not found')
+          index.write_text(html.replace(anchor, faq + '\n\n' + anchor, 1), encoding='utf-8')
+          PY
       - name: Upload demo
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./web
+          path: ./_site
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
