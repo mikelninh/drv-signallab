@@ -39,10 +39,22 @@ jobs:
           index = Path('_site/index.html')
           faq = Path('web/faq-snippet.html').read_text(encoding='utf-8')
           html = index.read_text(encoding='utf-8')
+
+          # Keep the first read focused on the user outcome, not methodology.
+          old_hero = 'Die mittlere Bearbeitungszeit für Kontenklärungen in Berlin ist im letzten Beobachtungszeitraum deutlich gestiegen.'
+          new_hero = 'Bearbeitungszeit bei Kontenklärungen deutlich gestiegen.'
+          if old_hero not in html:
+              raise SystemExit('Hero polish anchor not found')
+          html = html.replace(old_hero, new_hero, 1)
+
+          # Methodology remains available, but visually secondary.
+          html = html.replace('<h3>Methodik & technische Umsetzung</h3>', '<h3>Methodik</h3>', 1)
+
           anchor = '    <section class="panel method">'
           if anchor not in html:
               raise SystemExit('FAQ injection anchor not found')
-          index.write_text(html.replace(anchor, faq + '\n\n' + anchor, 1), encoding='utf-8')
+          html = html.replace(anchor, faq + '\n\n' + anchor, 1)
+          index.write_text(html, encoding='utf-8')
           PY
       - name: Upload demo
         uses: actions/upload-pages-artifact@v4
