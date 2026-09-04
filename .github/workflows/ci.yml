@@ -17,13 +17,18 @@ jobs:
       - run: pip install -r requirements.txt
       - run: pip install -e . --no-deps
       - run: pytest -q
-      - name: Check frontend JavaScript syntax
+      - name: Build engine-backed demo
+        run: |
+          rm -rf _site
+          cp -R web _site
+          python -m signallab.presentation
+      - name: Check rendered frontend JavaScript syntax
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
 
-          html = Path('web/index.html').read_text()
+          html = Path('_site/index.html').read_text()
           match = re.search(r'<script>(.*)</script>', html, re.S)
           assert match, 'inline demo script not found'
           Path('/tmp/signallab-app.js').write_text(match.group(1))
