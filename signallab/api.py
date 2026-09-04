@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
+from fastapi.responses import HTMLResponse
 
 from .data import generate_cases
 from .metrics import (
@@ -16,6 +16,7 @@ from .metrics import (
     summary,
     trend_report,
 )
+from .presentation import render_demo_html
 
 app = FastAPI(
     title="DRV SignalLab",
@@ -69,6 +70,9 @@ def get_methodology() -> dict:
     return methodology_report()
 
 
-@app.get("/", include_in_schema=False)
-def demo() -> FileResponse:
-    return FileResponse(Path(__file__).parent.parent / "web" / "index.html")
+@app.get("/", include_in_schema=False, response_class=HTMLResponse)
+def demo() -> HTMLResponse:
+    root = Path(__file__).parent.parent
+    source = (root / "web" / "index.html").read_text(encoding="utf-8")
+    faq = (root / "web" / "faq-snippet.html").read_text(encoding="utf-8")
+    return HTMLResponse(render_demo_html(source, faq))
