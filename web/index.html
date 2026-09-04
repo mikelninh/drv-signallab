@@ -8,98 +8,357 @@
   <title>SignalLab – Veränderungen erkennen, erklären und sicher prüfen</title>
   <style>
     :root{
-      --bg:#f7f9fc;--surface:#ffffff;--surface-soft:#f6f9fe;--ink:#13213a;--muted:#66758b;
-      --line:#dbe3ed;--line-strong:#c8d5e4;--blue:#0b5bd3;--blue-2:#2b74df;--blue-soft:#edf5ff;
-      --blue-pale:#dcecff;--green:#15835a;--amber:#c66a12;--shadow:0 10px 30px rgba(31,55,84,.06);
-      --radius:18px;--max:1240px;
+      --bg:#f7f9fc;
+      --surface:#ffffff;
+      --surface-soft:#f6f9fe;
+      --ink:#13213a;
+      --muted:#66758b;
+      --line:#dbe3ed;
+      --line-strong:#c8d5e4;
+      --blue:#0b5bd3;
+      --blue-2:#2b74df;
+      --blue-soft:#edf5ff;
+      --blue-pale:#dcecff;
+      --green:#15835a;
+      --amber:#c66a12;
+      --shadow:0 10px 30px rgba(31,55,84,.06);
+      --radius:18px;
+      --max:1240px;
     }
-    *{box-sizing:border-box}html{scroll-behavior:smooth}
-    body{margin:0;background:linear-gradient(180deg,#fbfcfe 0%,var(--bg) 100%);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-    a{color:inherit}.shell{width:min(var(--max),calc(100% - 48px));margin:0 auto;padding:26px 0 44px}
-    .eyebrow{font-size:13px;color:#56677f;margin-bottom:14px}.masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;margin-bottom:22px}
-    .brand{display:flex;align-items:center;gap:14px}.brand-mark{width:48px;height:48px;border:2px solid var(--blue);border-radius:14px;display:grid;place-items:center;background:#fff;color:var(--blue);flex:0 0 auto}
-    .brand-mark svg{width:29px;height:29px}.brand h1{margin:0;font-size:34px;letter-spacing:-.035em;line-height:1}.brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
-    .safety{display:inline-flex;align-items:center;gap:8px;color:#607088;font-size:13px;white-space:nowrap;padding-top:8px}.safety svg{width:18px;height:18px;color:#627891}
-    .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,.98fr);overflow:hidden;margin-bottom:16px}.hero-copy{padding:36px 38px 32px}.hero-chart{padding:32px 32px 24px;border-left:1px solid var(--line)}
-    .section-kicker{font-size:13px;font-weight:760;color:var(--blue);margin-bottom:14px}.hero-copy h2{margin:0;font-size:clamp(28px,2.7vw,40px);line-height:1.18;letter-spacing:-.035em;max-width:690px}
-    .metric{color:var(--blue);font-size:clamp(40px,4.6vw,60px);font-weight:780;letter-spacing:-.05em;margin:22px 0 2px;line-height:1.05}
-    .metric-meta{display:flex;gap:14px;flex-wrap:wrap;color:#4d6079;font-size:14px;margin-bottom:19px}.metric-meta strong{color:var(--blue)}.dot::before{content:"·";margin-right:14px;color:#9aabba}
-    .interpretation{font-size:15px;line-height:1.55;color:#42546d;max-width:670px;margin:0 0 19px}.next-step{display:grid;grid-template-columns:34px 1fr;gap:13px;padding:15px 17px;border:1px solid #cfe2fb;background:var(--blue-soft);border-radius:12px}
-    .info-icon{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--blue);color:white;font-weight:800;font-size:15px}.next-step b{display:block;color:var(--blue);margin-bottom:2px}.next-step p{margin:0;font-size:14px;line-height:1.42;color:#263b57}
-    .chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:11px}.chart-head h3{margin:0;font-size:20px;letter-spacing:-.02em}.chart-sub{margin:4px 0 0;color:var(--muted);font-size:12px}
-    .chart-wrap{position:relative;height:315px;margin-top:10px}.chart-wrap svg{width:100%;height:100%;display:block;overflow:visible}.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:11px;color:#5e6f85;margin-top:8px}.legend span{display:inline-flex;align-items:center;gap:7px}
-    .legend-box{width:12px;height:12px;border-radius:2px;background:#d9eaff;border:1px solid #c8dff9}.legend-line{width:18px;height:2px;background:var(--blue);position:relative}.legend-line::after{content:"";width:5px;height:5px;border:2px solid var(--blue);background:#fff;border-radius:50%;position:absolute;left:6px;top:-3px}
-    .explain-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}.section{padding:24px 24px 20px}.section-title{display:flex;align-items:center;gap:10px;margin-bottom:15px}.section-title svg{width:24px;height:24px;color:var(--blue);flex:0 0 auto}.section-title h3{margin:0;font-size:19px;color:#0a53bd;letter-spacing:-.015em}
-    .fact-table,.trust-table{border:1px solid var(--line);border-radius:12px;overflow:hidden}.fact-row,.trust-row{display:grid;grid-template-columns:210px 1fr;min-height:43px;border-top:1px solid var(--line)}.fact-row:first-child,.trust-row:first-child{border-top:0}
-    .fact-row>div,.trust-row>div{padding:10px 14px}.fact-row>div:first-child,.trust-row>div:first-child{font-weight:650;color:#2d3b50;border-right:1px solid var(--line)}.fact-row>div:last-child,.trust-row>div:last-child{color:#516176}.fact-row .emph{color:var(--blue)!important;font-weight:760}
-    .trust-row{grid-template-columns:1fr 220px}.status-ok{color:var(--green)!important;font-weight:650}.status-warn{color:var(--amber)!important;font-weight:650}.trust-note{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:13px 14px;margin-top:12px;background:var(--blue-soft);border:1px solid #d5e6fb;border-radius:10px;font-size:13px;color:#3e516b;line-height:1.45}.trust-note .info-icon{width:27px;height:27px;font-size:13px}
-    .method{padding:20px 24px 18px;margin-bottom:12px}.method-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}.method-title{display:flex;align-items:center;gap:10px}.method-title svg{width:24px;height:24px;color:var(--blue)}.method-title h3{margin:0;color:#0a53bd;font-size:18px}
-    .github-link{display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-size:13px;font-weight:650;text-decoration:none}.github-link:hover{text-decoration:underline}.method-items{display:flex;flex-wrap:wrap;gap:9px}.method-item{border:1px solid var(--line);background:#fbfcfe;border-radius:9px;padding:8px 12px;color:#56677f;font-size:12px}
-    .footer{display:flex;justify-content:space-between;gap:18px;align-items:center;color:#758499;font-size:11px;padding:0 2px}.footer a{color:var(--blue);font-weight:650;text-decoration:none}.footer a:hover{text-decoration:underline}
-    details.mobile-card{display:contents}summary.mobile-summary{list-style:none}summary.mobile-summary::-webkit-details-marker{display:none}
-    @media(max-width:980px){.shell{width:min(100% - 32px,820px);padding-top:20px}.masthead{align-items:center}.hero{grid-template-columns:1fr}.hero-chart{border-left:0;border-top:1px solid var(--line)}.explain-grid{grid-template-columns:1fr}.chart-wrap{height:300px}}
-    @media(max-width:640px){.shell{width:calc(100% - 22px);padding:14px 0 28px}.eyebrow{font-size:11px;margin:0 0 12px}.masthead{display:block;margin-bottom:14px}.brand{align-items:flex-start}.brand-mark{width:42px;height:42px;border-radius:12px}.brand h1{font-size:30px}.brand p{font-size:13px;line-height:1.35}.safety{padding:12px 0 0;font-size:12px}.panel{border-radius:14px;box-shadow:0 6px 20px rgba(31,55,84,.045)}.hero{display:block}.hero-copy{padding:22px 20px 20px}.hero-chart{padding:20px 18px 16px}.section-kicker{font-size:12px;margin-bottom:10px}.hero-copy h2{font-size:26px;line-height:1.22}.metric{font-size:43px;margin-top:18px}.metric-meta{gap:7px;font-size:12px;margin-bottom:15px}.dot::before{margin-right:7px}.interpretation{font-size:13px}.next-step{grid-template-columns:30px 1fr;padding:13px}.next-step p{font-size:13px}.chart-head{display:block}.chart-wrap{height:235px;margin-top:8px}.legend{gap:10px;font-size:10px}.explain-grid{gap:12px}.section{padding:0}details.mobile-card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 6px 20px rgba(31,55,84,.045);overflow:hidden}summary.mobile-summary{cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:17px 18px;color:#0a53bd;font-weight:760}summary.mobile-summary .sum-left{display:flex;align-items:center;gap:9px}summary.mobile-summary svg{width:22px;height:22px}summary.mobile-summary::after{content:"⌄";font-size:22px;line-height:1;transition:transform .2s ease}details[open] summary.mobile-summary::after{transform:rotate(180deg)}details.mobile-card .mobile-body{padding:0 14px 14px}.section>.section-title{display:none}.fact-row,.trust-row{grid-template-columns:44% 56%;font-size:12px;min-height:40px}.fact-row>div,.trust-row>div{padding:9px 10px}.trust-note{font-size:12px}.method{padding:0;margin-bottom:10px}.method-head{display:none}.method-body{padding:0 14px 14px}.method-items{gap:7px}.method-item{font-size:11px;padding:7px 9px}.footer{display:block;font-size:10px;line-height:1.4;padding:3px 2px}.footer .footer-link{display:block;margin-top:7px;font-size:12px}}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#fbfcfe 0%,var(--bg) 100%);
+      color:var(--ink);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{color:inherit}
+    .shell{width:min(var(--max),calc(100% - 48px));margin:0 auto;padding:26px 0 44px}
+    .eyebrow{font-size:13px;color:#56677f;margin-bottom:14px}
+    .masthead{display:flex;justify-content:space-between;align-items:flex-start;gap:30px;margin-bottom:22px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .brand-mark{
+      width:48px;height:48px;border:2px solid var(--blue);border-radius:14px;
+      display:grid;place-items:center;background:#fff;color:var(--blue);flex:0 0 auto;
+    }
+    .brand-mark svg{width:29px;height:29px}
+    .brand h1{margin:0;font-size:34px;letter-spacing:-.035em;line-height:1}
+    .brand p{margin:6px 0 0;color:var(--muted);font-size:14px}
+    .safety{
+      display:inline-flex;align-items:center;gap:8px;color:#607088;font-size:13px;
+      white-space:nowrap;padding-top:8px;
+    }
+    .safety svg{width:18px;height:18px;color:#627891}
+
+    .panel{
+      background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero{
+      display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,.98fr);
+      overflow:hidden;margin-bottom:16px;
+    }
+    .hero-copy{padding:36px 38px 32px}
+    .hero-chart{padding:32px 32px 24px;border-left:1px solid var(--line)}
+    .section-kicker{font-size:13px;font-weight:760;color:var(--blue);margin-bottom:14px}
+    .hero-copy h2{
+      margin:0;font-size:clamp(28px,2.7vw,40px);line-height:1.18;letter-spacing:-.035em;
+      max-width:690px;
+    }
+    .metric{
+      color:var(--blue);font-size:clamp(40px,4.6vw,60px);font-weight:780;letter-spacing:-.05em;
+      margin:22px 0 2px;line-height:1.05;
+    }
+    .metric-meta{display:flex;gap:14px;flex-wrap:wrap;color:#4d6079;font-size:14px;margin-bottom:19px}
+    .metric-meta strong{color:var(--blue)}
+    .dot::before{content:"·";margin-right:14px;color:#9aabba}
+    .interpretation{font-size:15px;line-height:1.55;color:#42546d;max-width:670px;margin:0 0 19px}
+    .next-step{
+      display:grid;grid-template-columns:34px 1fr;gap:13px;padding:15px 17px;
+      border:1px solid #cfe2fb;background:var(--blue-soft);border-radius:12px;
+    }
+    .info-icon{
+      width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+      background:var(--blue);color:white;font-weight:800;font-size:15px;
+    }
+    .next-step b{display:block;color:var(--blue);margin-bottom:2px}
+    .next-step p{margin:0;font-size:14px;line-height:1.42;color:#263b57}
+
+    .chart-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:11px}
+    .chart-head h3{margin:0;font-size:20px;letter-spacing:-.02em}
+    .chart-sub{margin:4px 0 0;color:var(--muted);font-size:12px}
+    .chart-wrap{position:relative;height:315px;margin-top:10px}
+    .chart-wrap svg{width:100%;height:100%;display:block;overflow:visible}
+    .legend{display:flex;gap:20px;flex-wrap:wrap;font-size:11px;color:#5e6f85;margin-top:8px}
+    .legend span{display:inline-flex;align-items:center;gap:7px}
+    .legend-box{width:12px;height:12px;border-radius:2px;background:#d9eaff;border:1px solid #c8dff9}
+    .legend-line{width:18px;height:2px;background:var(--blue);position:relative}
+    .legend-line::after{content:"";width:5px;height:5px;border:2px solid var(--blue);background:#fff;border-radius:50%;position:absolute;left:6px;top:-3px}
+
+    .explain-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    .section{padding:24px 24px 20px}
+    .section-title{display:flex;align-items:center;gap:10px;margin-bottom:15px}
+    .section-title svg{width:24px;height:24px;color:var(--blue);flex:0 0 auto}
+    .section-title h3{margin:0;font-size:19px;color:#0a53bd;letter-spacing:-.015em}
+    .fact-table,.trust-table{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    .fact-row,.trust-row{
+      display:grid;grid-template-columns:210px 1fr;min-height:43px;border-top:1px solid var(--line);
+    }
+    .fact-row:first-child,.trust-row:first-child{border-top:0}
+    .fact-row>div,.trust-row>div{padding:10px 14px}
+    .fact-row>div:first-child,.trust-row>div:first-child{font-weight:650;color:#2d3b50;border-right:1px solid var(--line)}
+    .fact-row>div:last-child,.trust-row>div:last-child{color:#516176}
+    .fact-row .emph{color:var(--blue)!important;font-weight:760}
+    .trust-row{grid-template-columns:1fr 220px}
+    .status-ok{color:var(--green)!important;font-weight:650}
+    .status-warn{color:var(--amber)!important;font-weight:650}
+    .trust-note{
+      display:grid;grid-template-columns:30px 1fr;gap:12px;padding:13px 14px;margin-top:12px;
+      background:var(--blue-soft);border:1px solid #d5e6fb;border-radius:10px;
+      font-size:13px;color:#3e516b;line-height:1.45;
+    }
+    .trust-note .info-icon{width:27px;height:27px;font-size:13px}
+
+    .method{padding:20px 24px 18px;margin-bottom:12px}
+    .method-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}
+    .method-title{display:flex;align-items:center;gap:10px}
+    .method-title svg{width:24px;height:24px;color:var(--blue)}
+    .method-title h3{margin:0;color:#0a53bd;font-size:18px}
+    .github-link{
+      display:inline-flex;align-items:center;gap:7px;color:var(--blue);font-size:13px;font-weight:650;
+      text-decoration:none;
+    }
+    .github-link:hover{text-decoration:underline}
+    .method-items{display:flex;flex-wrap:wrap;gap:9px}
+    .method-item{
+      border:1px solid var(--line);background:#fbfcfe;border-radius:9px;padding:8px 12px;
+      color:#56677f;font-size:12px;
+    }
+    .footer{
+      display:flex;justify-content:space-between;gap:18px;align-items:center;color:#758499;font-size:11px;padding:0 2px;
+    }
+    .footer a{color:var(--blue);font-weight:650;text-decoration:none}
+    .footer a:hover{text-decoration:underline}
+
+    details.mobile-card{display:contents}
+    summary.mobile-summary{display:none;list-style:none}
+    summary.mobile-summary::-webkit-details-marker{display:none}
+
+    @media(max-width:980px){
+      .shell{width:min(100% - 32px,820px);padding-top:20px}
+      .masthead{align-items:center}
+      .hero{grid-template-columns:1fr}
+      .hero-chart{border-left:0;border-top:1px solid var(--line)}
+      .explain-grid{grid-template-columns:1fr}
+      .chart-wrap{height:300px}
+    }
+    @media(max-width:640px){
+      .shell{width:calc(100% - 22px);padding:14px 0 28px}
+      .eyebrow{font-size:11px;margin:0 0 12px}
+      .masthead{display:block;margin-bottom:14px}
+      .brand{align-items:flex-start}
+      .brand-mark{width:42px;height:42px;border-radius:12px}
+      .brand h1{font-size:30px}
+      .brand p{font-size:13px;line-height:1.35}
+      .safety{padding:12px 0 0;font-size:12px}
+      .panel{border-radius:14px;box-shadow:0 6px 20px rgba(31,55,84,.045)}
+      .hero{display:block}
+      .hero-copy{padding:22px 20px 20px}
+      .hero-chart{padding:20px 18px 16px}
+      .section-kicker{font-size:12px;margin-bottom:10px}
+      .hero-copy h2{font-size:26px;line-height:1.22}
+      .metric{font-size:43px;margin-top:18px}
+      .metric-meta{gap:7px;font-size:12px;margin-bottom:15px}
+      .dot::before{margin-right:7px}
+      .interpretation{font-size:13px}
+      .next-step{grid-template-columns:30px 1fr;padding:13px}
+      .next-step p{font-size:13px}
+      .chart-head{display:block}
+      .chart-wrap{height:235px;margin-top:8px}
+      .legend{gap:10px;font-size:10px}
+      .explain-grid{gap:12px}
+      .section{padding:0}
+      details.mobile-card{
+        display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+        box-shadow:0 6px 20px rgba(31,55,84,.045);overflow:hidden;
+      }
+      summary.mobile-summary{
+        cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;
+        padding:17px 18px;color:#0a53bd;font-weight:760;
+      }
+      summary.mobile-summary .sum-left{display:flex;align-items:center;gap:9px}
+      summary.mobile-summary svg{width:22px;height:22px}
+      summary.mobile-summary::after{content:"⌄";font-size:22px;line-height:1;transition:transform .2s ease}
+      details[open] summary.mobile-summary::after{transform:rotate(180deg)}
+      details.mobile-card .mobile-body{padding:0 14px 14px}
+      .section>.section-title{display:none}
+      .fact-row,.trust-row{grid-template-columns:44% 56%;font-size:12px;min-height:40px}
+      .fact-row>div,.trust-row>div{padding:9px 10px}
+      .trust-note{font-size:12px}
+      .method{padding:0;margin-bottom:10px}
+      .method-head{display:none}
+      .method-body{padding:0 14px 14px}
+      .method-items{gap:7px}
+      .method-item{font-size:11px;padding:7px 9px}
+      .footer{display:block;font-size:10px;line-height:1.4;padding:3px 2px}
+      .footer .footer-link{display:block;margin-top:7px;font-size:12px}
+    }
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
 <body>
   <main class="shell">
     <div class="eyebrow">Arbeitsprobe für das KI-Labor der öffentlichen Verwaltung</div>
+
     <header class="masthead">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V10M10 21V14M16 21V7M22 21V3"/></svg></div>
-        <div><h1>SignalLab</h1><p>Veränderungen in Verwaltungsdaten erkennen, erklären und sicher zur Prüfung geben.</p></div>
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V10M10 21V14M16 21V7M22 21V3"/></svg>
+        </div>
+        <div>
+          <h1>SignalLab</h1>
+          <p>Veränderungen in Verwaltungsdaten erkennen, erklären und sicher zur Prüfung geben.</p>
+        </div>
       </div>
-      <div class="safety"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>Keine automatische Entscheidung</div>
+      <div class="safety">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+        Keine automatische Entscheidung
+      </div>
     </header>
+
     <section class="panel hero" aria-labelledby="signal-title">
       <div class="hero-copy">
         <div class="section-kicker">Auffällige Entwicklung erkannt</div>
         <h2 id="signal-title">Die mittlere Bearbeitungszeit für Kontenklärungen in Berlin ist im letzten Beobachtungszeitraum deutlich gestiegen.</h2>
         <div class="metric">24,2 → 32,7 Tage</div>
-        <div class="metric-meta"><strong>+8,4 Tage</strong><span class="dot">95%-KI +7,7 bis +9,1</span><span class="dot">410 aktuelle Fälle</span></div>
+        <div class="metric-meta">
+          <strong>+8,4 Tage</strong>
+          <span class="dot">95%-KI +7,7 bis +9,1</span>
+          <span class="dot">410 aktuelle Fälle</span>
+        </div>
         <p class="interpretation">Das Signal zeigt eine belastbare Veränderung der Bearbeitungszeit. Es zeigt nicht, warum diese Veränderung entstanden ist.</p>
-        <div class="next-step"><div class="info-icon" aria-hidden="true">i</div><div><b>Empfohlener nächster Prüfschritt</b><p>Arbeitslast, Eingangsmix und mögliche Änderungen im Quellsystem gemeinsam mit dem Fachbereich prüfen.</p></div></div>
+        <div class="next-step">
+          <div class="info-icon" aria-hidden="true">i</div>
+          <div>
+            <b>Empfohlener nächster Prüfschritt</b>
+            <p>Arbeitslast, Eingangsmix und mögliche Änderungen im Quellsystem gemeinsam mit dem Fachbereich prüfen.</p>
+          </div>
+        </div>
       </div>
+
       <div class="hero-chart">
-        <div class="chart-head"><div><h3>Bearbeitungszeit im Verlauf</h3><p class="chart-sub">Vergleichszeitraum: Sept. 2024 – Mai 2026 · aktueller Zeitraum: Juni – Aug. 2026</p></div></div>
-        <div class="chart-wrap"><svg id="trendChart" role="img" aria-label="Zeitreihe der mittleren Bearbeitungszeit mit Anstieg von Juni bis August 2026"></svg></div>
-        <div class="legend" aria-hidden="true"><span><i class="legend-box"></i>Mittlere Bearbeitungszeit (Tage)</span><span><i class="legend-line"></i>Trend (gleitender 3-Monats-Durchschnitt)</span></div>
+        <div class="chart-head">
+          <div>
+            <h3>Bearbeitungszeit im Verlauf</h3>
+            <p class="chart-sub">Vergleichszeitraum: Sept. 2024 – Mai 2026 · aktueller Zeitraum: Juni – Aug. 2026</p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <svg id="trendChart" role="img" aria-label="Zeitreihe der mittleren Bearbeitungszeit mit Anstieg von Juni bis August 2026"></svg>
+        </div>
+        <div class="legend" aria-hidden="true">
+          <span><i class="legend-box"></i>Mittlere Bearbeitungszeit (Tage)</span>
+          <span><i class="legend-line"></i>Trend (gleitender 3-Monats-Durchschnitt)</span>
+        </div>
       </div>
     </section>
+
     <div class="explain-grid">
       <section class="section panel">
         <details class="mobile-card" open>
-          <summary class="mobile-summary"><span class="sum-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.5 2c-.8.5-1.3 1-1.3 2"/><path d="M12 17h.01"/></svg>Warum wird dieses Signal angezeigt?</span></summary>
+          <summary class="mobile-summary">
+            <span class="sum-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.5 2c-.8.5-1.3 1-1.3 2"/><path d="M12 17h.01"/></svg>
+              Warum wird dieses Signal angezeigt?
+            </span>
+          </summary>
           <div class="mobile-body">
-            <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.5 2c-.8.5-1.3 1-1.3 2"/><path d="M12 17h.01"/></svg><h3>Warum wird dieses Signal angezeigt?</h3></div>
-            <div class="fact-table"><div class="fact-row"><div>Stichprobe</div><div>921 vs. 410 Fälle</div></div><div class="fact-row"><div>Effekt</div><div class="emph">+8,4 Tage</div></div><div class="fact-row"><div>95%-Konfidenzintervall</div><div>+7,7 bis +9,1 Tage</div></div><div class="fact-row"><div>Effektstärke</div><div>Cohen’s d 1,45</div></div><div class="fact-row"><div>Interpretationsgrenze</div><div>Eine statistische Veränderung ist kein Beweis für Ursache, Fehlverhalten oder schlechte Leistung.</div></div></div>
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.3 2.3 0 1 1 3.5 2c-.8.5-1.3 1-1.3 2"/><path d="M12 17h.01"/></svg>
+              <h3>Warum wird dieses Signal angezeigt?</h3>
+            </div>
+            <div class="fact-table">
+              <div class="fact-row"><div>Stichprobe</div><div>921 vs. 410 Fälle</div></div>
+              <div class="fact-row"><div>Effekt</div><div class="emph">+8,4 Tage</div></div>
+              <div class="fact-row"><div>95%-Konfidenzintervall</div><div>+7,7 bis +9,1 Tage</div></div>
+              <div class="fact-row"><div>Effektstärke</div><div>Cohen’s d 1,45</div></div>
+              <div class="fact-row"><div>Interpretationsgrenze</div><div>Eine statistische Veränderung ist kein Beweis für Ursache, Fehlverhalten oder schlechte Leistung.</div></div>
+            </div>
           </div>
         </details>
       </section>
+
       <section class="section panel">
         <details class="mobile-card" open>
-          <summary class="mobile-summary"><span class="sum-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>Können wir den Daten vertrauen?</span></summary>
+          <summary class="mobile-summary">
+            <span class="sum-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+              Können wir den Daten vertrauen?
+            </span>
+          </summary>
           <div class="mobile-body">
-            <div class="section-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg><h3>Können wir den Daten vertrauen?</h3></div>
-            <div class="trust-table"><div class="trust-row"><div>Schema vollständig</div><div class="status-ok">✓ vollständig</div></div><div class="trust-row"><div>Duplikate</div><div class="status-ok">keine Auffälligkeit</div></div><div class="trust-row"><div>Fehlende Werte</div><div class="status-warn">⚠ seit Juni gestiegen</div></div><div class="trust-row"><div>Eingangskanäle</div><div class="status-warn">⚠ Verteilung verändert</div></div></div>
-            <div class="trust-note"><div class="info-icon" aria-hidden="true">i</div><div>Vor einer Modellanpassung sollte geprüft werden, ob sich das Quellsystem oder der Intake-Prozess verändert hat.</div></div>
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 22s8-3.8 8-10V5l-8-3-8 3v7c0 6.2 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+              <h3>Können wir den Daten vertrauen?</h3>
+            </div>
+            <div class="trust-table">
+              <div class="trust-row"><div>Schema vollständig</div><div class="status-ok">✓ vollständig</div></div>
+              <div class="trust-row"><div>Duplikate</div><div class="status-ok">keine Auffälligkeit</div></div>
+              <div class="trust-row"><div>Fehlende Werte</div><div class="status-warn">⚠ seit Juni gestiegen</div></div>
+              <div class="trust-row"><div>Eingangskanäle</div><div class="status-warn">⚠ Verteilung verändert</div></div>
+            </div>
+            <div class="trust-note">
+              <div class="info-icon" aria-hidden="true">i</div>
+              <div>Vor einer Modellanpassung sollte geprüft werden, ob sich das Quellsystem oder der Intake-Prozess verändert hat.</div>
+            </div>
           </div>
         </details>
       </section>
     </div>
+
     <section class="panel method">
       <details class="mobile-card" open>
-        <summary class="mobile-summary"><span class="sum-left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg>Methodik & technische Umsetzung</span></summary>
+        <summary class="mobile-summary">
+          <span class="sum-left">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg>
+            Methodik & technische Umsetzung
+          </span>
+        </summary>
         <div class="method-body">
-          <div class="method-head"><div class="method-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg><h3>Methodik & technische Umsetzung</h3></div><a class="github-link" href="https://github.com/mikelninh/drv-signallab" target="_blank" rel="noreferrer">Quellcode auf GitHub ↗</a></div>
-          <div class="method-items"><span class="method-item">50.000 synthetische Fälle</span><span class="method-item">Python · pandas · NumPy · FastAPI</span><span class="method-item">PSI</span><span class="method-item">Konfidenzintervalle</span><span class="method-item">Effektstärke</span><span class="method-item">Regressionstests</span><span class="method-item">API & CI</span></div>
+          <div class="method-head">
+            <div class="method-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M14 5l-4 14"/></svg>
+              <h3>Methodik & technische Umsetzung</h3>
+            </div>
+            <a class="github-link" href="https://github.com/mikelninh/drv-signallab" target="_blank" rel="noreferrer">
+              Quellcode auf GitHub ↗
+            </a>
+          </div>
+          <div class="method-items">
+            <span class="method-item">50.000 synthetische Fälle</span>
+            <span class="method-item">Python · pandas · NumPy · FastAPI</span>
+            <span class="method-item">PSI</span>
+            <span class="method-item">Konfidenzintervalle</span>
+            <span class="method-item">Effektstärke</span>
+            <span class="method-item">Regressionstests</span>
+            <span class="method-item">API & CI</span>
+          </div>
         </div>
       </details>
     </section>
-    <footer class="footer"><span>Ergebnisse basieren auf synthetischen Daten und dienen ausschließlich Demonstrationszwecken.</span><a class="footer-link" href="https://github.com/mikelninh/drv-signallab" target="_blank" rel="noreferrer">Quellcode auf GitHub ↗</a></footer>
+
+    <footer class="footer">
+      <span>Ergebnisse basieren auf synthetischen Daten und dienen ausschließlich Demonstrationszwecken.</span>
+      <a class="footer-link" href="https://github.com/mikelninh/drv-signallab" target="_blank" rel="noreferrer">Quellcode auf GitHub ↗</a>
+    </footer>
   </main>
+
   <script>
     (() => {
       const values = [24.6,23.2,22.8,23.6,24.0,23.9,22.7,22.5,23.3,22.8,21.6,20.5,21.3,21.4,21.4,20.2,21.2,21.2,22.0,23.0,24.1,30.8,33.0,34.3];
@@ -108,20 +367,52 @@
       const NS = "http://www.w3.org/2000/svg";
       const W = 640, H = 300, pad = {l:40,r:10,t:18,b:42}, maxY = 40;
       svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-      const make = (tag, attrs, text) => {const el = document.createElementNS(NS, tag);Object.entries(attrs || {}).forEach(([k,v]) => el.setAttribute(k, v));if (text != null) el.textContent = text;svg.appendChild(el);return el;};
+
+      const make = (tag, attrs, text) => {
+        const el = document.createElementNS(NS, tag);
+        Object.entries(attrs || {}).forEach(([k,v]) => el.setAttribute(k, v));
+        if (text != null) el.textContent = text;
+        svg.appendChild(el);
+        return el;
+      };
       const x = i => pad.l + i * ((W-pad.l-pad.r)/(values.length-1));
       const y = v => pad.t + (maxY-v) * ((H-pad.t-pad.b)/maxY);
-      const recentStart = 21;const step = (W-pad.l-pad.r)/(values.length-1);
+      const recentStart = 21;
+      const step = (W-pad.l-pad.r)/(values.length-1);
+
       make("rect",{x:x(recentStart)-step*.55,y:pad.t-4,width:W-pad.r-(x(recentStart)-step*.55),height:H-pad.t-pad.b+8,rx:8,fill:"#edf5ff"});
       make("text",{x:W-pad.r-8,y:pad.t+13,"text-anchor":"end",fill:"#0b5bd3","font-size":"10","font-weight":"700"},"Aktueller Zeitraum");
-      [0,10,20,30,40].forEach(t => {make("line",{x1:pad.l,y1:y(t),x2:W-pad.r,y2:y(t),stroke:"#e1e8f0","stroke-width":"1"});make("text",{x:pad.l-9,y:y(t)+4,"text-anchor":"end",fill:"#708198","font-size":"10"},String(t));});
+
+      [0,10,20,30,40].forEach(t => {
+        make("line",{x1:pad.l,y1:y(t),x2:W-pad.r,y2:y(t),stroke:"#e1e8f0","stroke-width":"1"});
+        make("text",{x:pad.l-9,y:y(t)+4,"text-anchor":"end",fill:"#708198","font-size":"10"},String(t));
+      });
+
       const barW = Math.max(7, step*.55);
-      values.forEach((v,i) => {make("rect",{x:x(i)-barW/2,y:y(v),width:barW,height:y(0)-y(v),rx:2,fill:i>=recentStart ? "#78aef3" : "#d7e8fb"});});
-      const avg = values.map((_,i) => {const s = values.slice(Math.max(0,i-2),i+1);return s.reduce((a,b)=>a+b,0)/s.length;});
+      values.forEach((v,i) => {
+        make("rect",{
+          x:x(i)-barW/2,y:y(v),width:barW,height:y(0)-y(v),rx:2,
+          fill:i>=recentStart ? "#78aef3" : "#d7e8fb"
+        });
+      });
+
+      const avg = values.map((_,i) => {
+        const s = values.slice(Math.max(0,i-2),i+1);
+        return s.reduce((a,b)=>a+b,0)/s.length;
+      });
       const path = avg.map((v,i)=>`${i===0?"M":"L"} ${x(i)} ${y(v)}`).join(" ");
       make("path",{d:path,fill:"none",stroke:"#0b5bd3","stroke-width":"2.3","stroke-linecap":"round","stroke-linejoin":"round"});
-      avg.forEach((v,i)=>{make("circle",{cx:x(i),cy:y(v),r:2.7,fill:"#fff",stroke:"#0b5bd3","stroke-width":"1.8"});});
-      [0,2,4,6,8,10,12,14,16,18,20,21,22,23].forEach(i => {const current = i>=21;make("text",{x:x(i),y:H-17,"text-anchor":"middle",fill:current?"#0b5bd3":"#6f7f93","font-size":current?"9.5":"9","font-weight":current?"700":"500"},labels[i]);});
+      avg.forEach((v,i)=>{
+        make("circle",{cx:x(i),cy:y(v),r:2.7,fill:"#fff",stroke:"#0b5bd3","stroke-width":"1.8"});
+      });
+
+      [0,2,4,6,8,10,12,14,16,18,20,21,22,23].forEach(i => {
+        const current = i>=21;
+        make("text",{
+          x:x(i),y:H-17,"text-anchor":"middle",fill:current?"#0b5bd3":"#6f7f93",
+          "font-size": current ? "9.5":"9","font-weight":current?"700":"500"
+        },labels[i]);
+      });
       make("text",{x:pad.l,y:10,fill:"#65778e","font-size":"9.5"},"Tage");
     })();
   </script>
