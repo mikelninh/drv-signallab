@@ -75,7 +75,8 @@ The demo does **not** need an LLM to produce its core findings.
 - PSI is calculated in Python,
 - confidence intervals and effect sizes are calculated in Python,
 - review boundaries are encoded,
-- golden cases are regression-tested.
+- golden cases are regression-tested,
+- the deployed hero metrics and chart are rendered from the same analytics engine and checked for presentation drift.
 
 A future LLM could summarise the computed evidence contract, but it would not own the calculation or decision authority.
 
@@ -108,14 +109,14 @@ Open `http://127.0.0.1:8000`.
 pytest -q
 ```
 
-The regression suite verifies the data generator, data quality, PSI, the two injected operational signals, statistical support, the sustained trend, decision boundaries, methodology exposure and API contracts.
+The regression suite verifies the data generator, data quality, PSI, the two injected operational signals, statistical support, the sustained trend, decision boundaries, methodology exposure, API contracts and the public presentation values.
 
 ## Role-fit map
 
 | Public-sector data / AI capability | SignalLab proof |
 |---|---|
 | Python | deterministic analytics engine |
-| data consolidation | 50k multi-source synthetic records |
+| source-system variation | 50k synthetic records across simulated source systems and channels |
 | pattern detection | process × region monitoring |
 | statistical reasoning | practical threshold + 95% CI + Cohen's *d* |
 | data quality | completeness, duplicates, schema integrity |
@@ -137,6 +138,8 @@ It uses:
 - no real DRV schema,
 - no real operational thresholds,
 - no automated pension / benefit / fraud / enforcement decision.
+
+Real multi-source ingestion, production ETL and operational data contracts are intentionally out of scope for this work sample. The synthetic generator models source-system variation so the monitoring logic can be inspected without claiming a production integration that does not exist.
 
 The thresholds exist to make the work sample inspectable and testable, not to claim domain policy.
 
