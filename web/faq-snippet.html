@@ -1,0 +1,50 @@
+<style>
+.faq{padding:24px;margin-bottom:16px}.faq-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:14px}.faq-head h3{margin:0;color:#0a53bd;font-size:20px;letter-spacing:-.02em}.faq-head p{margin:5px 0 0;color:#66758b;font-size:13px;max-width:760px;line-height:1.45}.faq-note{font-size:11px;color:#6d7e93;white-space:nowrap}.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}.faq-item{border:1px solid #dbe3ed;border-radius:11px;background:#fbfcfe;overflow:hidden}.faq-item summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:14px;align-items:center;padding:13px 14px;font-size:13px;font-weight:720;color:#263b57}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary::after{content:"+";font-size:18px;font-weight:500;color:#0b5bd3;line-height:1;flex:0 0 auto}.faq-item[open] summary::after{content:"−"}.faq-item[open] summary{color:#0a53bd;background:#edf5ff;border-bottom:1px solid #d5e6fb}.faq-answer{padding:13px 14px 14px;color:#4b5d75;font-size:12.5px;line-height:1.55}.faq-answer strong{color:#263b57}@media(max-width:640px){.faq{padding:18px 16px;margin-bottom:12px}.faq-head{display:block;margin-bottom:12px}.faq-head h3{font-size:18px}.faq-head p{font-size:12px}.faq-note{display:block;margin-top:7px}.faq-grid{grid-template-columns:1fr;gap:8px}.faq-item summary{font-size:12px;padding:12px}.faq-answer{font-size:12px;padding:12px}}
+</style>
+<section class="panel faq" aria-labelledby="faq-title">
+  <div class="faq-head">
+    <div>
+      <h3 id="faq-title">Technisches FAQ</h3>
+      <p>Fragen, die ich in einem Review erwarten würde - inklusive der Grenzen dieses Prototyps. Die Demo soll Entscheidungen nachvollziehbar machen, nicht perfekte Produktionsreife behaupten.</p>
+    </div>
+    <span class="faq-note">Engineering Review · 9 Fragen</span>
+  </div>
+  <div class="faq-grid">
+    <details class="faq-item">
+      <summary>Warum PSI?</summary>
+      <div class="faq-answer"><strong>PSI ist hier ein einfaches, modellunabhängiges Frühwarnsignal für Verteilungsänderungen.</strong> Es ist gut erklärbar und funktioniert auch ohne Labels. Für Produktion würde ich es je nach Datentyp mit Missingness, Schema-Checks und z. B. Wasserstein- oder Jensen-Shannon-Distanz ergänzen. Ein PSI-Wert zeigt Veränderung - nicht deren Ursache.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Wie wurden die Schwellenwerte gewählt?</summary>
+      <div class="faq-answer">Die Schwellenwerte sind <strong>explizite Demo-Betriebsregeln</strong>, keine behaupteten universellen Optima: praktische Mindeständerung, ausreichende Stichprobe und Unsicherheitscheck müssen gemeinsam erfüllt sein. In Produktion würde ich sie auf historischen Daten backtesten und gegen Kosten von Fehlalarmen und übersehenen Fällen kalibrieren.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Warum ein 95%-Konfidenzintervall?</summary>
+      <div class="faq-answer">Weil ich nicht nur sagen will, <em>dass</em> sich etwas verändert hat, sondern <strong>wie groß die Veränderung plausibel ist</strong>. Das Intervall zur Differenz der Mittelwerte macht Unsicherheit sichtbar. Bei schiefen Verteilungen oder Ausreißern würde ich robuste oder Bootstrap-Intervalle prüfen statt blind bei dieser Näherung zu bleiben.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Was passiert bei kleinen Stichproben?</summary>
+      <div class="faq-answer">Dann wird das Signal bewusst zurückhaltender. In der Demo gilt eine Mindeststichprobe; darunter würde ich <strong>kein starkes operatives Signal</strong> ausgeben, sondern „zu wenig Evidenz“ anzeigen. Alternativen sind längere Zeitfenster, Aggregation, Bootstrap-Verfahren oder bayesianische Schätzungen - abhängig vom Use Case.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Wie würdest du echte Datenquellen anbinden?</summary>
+      <div class="faq-answer">Über getrennte, möglichst read-only <strong>Source Adapter</strong>: API, Datenbank, Datei oder Event-Stream → Validierung → kanonisches Schema → Lineage/Metadaten → Quality Gates. Personenbezug würde ich minimieren, Zugriffe rollenbasiert steuern und Rohdaten nicht unnötig in Analyse- oder GenAI-Schichten kopieren.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Wie sähe die SQL-/ETL-Schicht aus?</summary>
+      <div class="faq-answer"><strong>Raw → Staging → Core → Analytics Mart.</strong> Rohdaten unverändert und nachvollziehbar speichern, in Staging typisieren/validieren, im Core gemeinsame Schlüssel und Fachlogik modellieren und daraus schlanke Monitoring-Tabellen erzeugen. Transformationen wären versioniert, inkrementell und mit Datenqualitäts-Tests abgesichert.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Was ist bei synthetischen Daten anders als in Produktion?</summary>
+      <div class="faq-answer">Hier kenne ich die eingebauten Veränderungen und kontrolliere die Datenentstehung. Echte Daten bringen <strong>Schemawechsel, verspätete Werte, Selektionsbias, fehlende Labels, Datenschutz, Berechtigungen und Rückkopplungseffekte</strong> mit. Deshalb beweist der Prototyp die Methode und Engineering-Haltung - nicht Produktionsperformance auf DRV-Daten.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Wie würdest du Daten- oder Modell-Drift überwachen?</summary>
+      <div class="faq-answer">Datenseitig: Schema, Missingness, Verteilungen und wichtige Slices über Zeit. Modellseitig zusätzlich <strong>Performance mit verzögertem Ground Truth, Kalibrierung, Residuen, Slice-Metriken und Backtests</strong>. Warnungen sollten Persistenz berücksichtigen, damit ein einzelner Ausreißer nicht automatisch Retraining oder operative Aktionen auslöst.</div>
+    </details>
+    <details class="faq-item">
+      <summary>Wo würde GenAI sinnvoll hineinpassen - und wo nicht?</summary>
+      <div class="faq-answer">Sinnvoll für <strong>adressatengerechte Zusammenfassungen, Analysten-Notizen, dokumentgestützte Q&amp;A oder Erklärungsvorschläge</strong> - idealerweise grounded und mit Quellen. Nicht für die Kernberechnung, Schwellenwerte, Datenqualitätslogik oder Leistungsentscheidungen. Die Faktenbasis sollte deterministisch bleiben; GenAI darf erklären und vorschlagen.</div>
+    </details>
+  </div>
+</section>
