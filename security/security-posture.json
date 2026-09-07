@@ -1,0 +1,26 @@
+{
+  "version": "security-posture/v1",
+  "project": { "id": "drv-signallab", "repository": "mikelninh/drv-signallab", "domain": "public-sector data quality, drift and decision monitoring" },
+  "thesis": "Core signals are computed deterministically from explicit data-quality and statistical contracts; an LLM may explain evidence later but does not own calculation or consequential authority.",
+  "controls": [
+    { "id": "authority_outside_model", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Compute first, explain second, human decides; no LLM owns the calculation or decision boundary." }] },
+    { "id": "least_privilege", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "The current core has no autonomous agent or tool execution path." }] },
+    { "id": "tenant_isolation", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "The portfolio proof uses deterministic synthetic administrative data and does not expose a multi-tenant production workload." }] },
+    { "id": "human_approval", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Signals trigger review; no individual benefit, enforcement or discrimination decision is automated." }] },
+    { "id": "provenance", "status": "implemented", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Signal evidence exposes baseline/recent windows, sample sizes, effect sizes, confidence intervals and explicit thresholds." }] },
+    { "id": "protected_data", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "No real citizen data is used in the work sample." }] },
+    { "id": "bounded_execution", "status": "not_applicable", "evidence": [{ "type": "doc", "path": "README.md", "claim": "There is no autonomous model/tool loop in the current product path." }] },
+    { "id": "auditability", "status": "implemented", "evidence": [{ "type": "test", "path": "tests", "claim": "Deterministic data generation, data quality, PSI, statistical signals, decision boundaries and presentation values are regression-tested." }, { "type": "doc", "path": "README.md", "claim": "Every surfaced signal exposes the evidence and interpretation boundary a human should inspect." }] },
+    { "id": "supply_chain", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "The current work sample does not claim complete production dependency or source-system provenance assurance." }] },
+    { "id": "adversarial_evals", "status": "not_proven", "evidence": [{ "type": "doc", "path": "README.md", "claim": "Current tests validate injected drift and negative decision boundaries, but there is no dedicated malicious data-poisoning/security gauntlet yet." }] },
+    { "id": "production_monitoring", "status": "partial", "evidence": [{ "type": "doc", "path": "README.md", "claim": "SignalLab implements monitoring logic for data quality/drift, while real production ingestion, SLOs and incident response remain out of scope." }] }
+  ],
+  "adversarial": { "taxonomy": "No dedicated malicious data-poisoning/security gauntlet published yet", "cases": 0, "passed": 0, "criticalEscapes": 0, "liveModel": false },
+  "claims": { "productionSecure": false, "promptInjectionSolved": false, "certified": false },
+  "residualRisks": [
+    "Current drift/data-quality tests are correctness and monitoring evidence, not a malicious data-poisoning red-team suite.",
+    "Source spoofing, schema poisoning, metric manipulation and adversarial missingness need dedicated attack fixtures.",
+    "Real multi-source ingestion, production ETL contracts and operational security monitoring remain out of scope.",
+    "No real citizen data or actual DRV decision rules are used or claimed."
+  ]
+}
